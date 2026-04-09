@@ -31,31 +31,14 @@ const Auctions = () => {
           <p className="text-muted-foreground mb-8">Bid on exclusive items in real-time. Every second counts.</p>
         </motion.div>
 
-        {/* Filters */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row gap-4 mb-8"
-        >
+        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="flex flex-col sm:flex-row gap-4 mb-8">
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search auctions..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-10 bg-card/60 border-border/50"
-            />
+            <Input placeholder="Search auctions..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-10 bg-card/60 border-border/50" />
           </div>
           <div className="flex gap-2 flex-wrap">
             {categories.map((cat) => (
-              <Button
-                key={cat}
-                size="sm"
-                variant={activeCategory === cat ? "default" : "outline"}
-                onClick={() => setActiveCategory(cat)}
-                className={activeCategory === cat ? "glow-primary" : "border-border/50 text-muted-foreground"}
-              >
+              <Button key={cat} size="sm" variant={activeCategory === cat ? "default" : "outline"} onClick={() => setActiveCategory(cat)} className={activeCategory === cat ? "glow-primary" : "border-border/50 text-muted-foreground"}>
                 {cat === "All" && <Filter className="mr-1 h-3 w-3" />}
                 {cat}
               </Button>
@@ -63,7 +46,6 @@ const Auctions = () => {
           </div>
         </motion.div>
 
-        {/* Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((item, i) => (
             <AuctionCard key={item.id} item={item} index={i} />

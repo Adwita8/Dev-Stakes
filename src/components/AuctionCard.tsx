@@ -4,20 +4,14 @@ import { Gavel, TrendingUp, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import CountdownTimer from "./CountdownTimer";
-import type { AuctionItem } from "@/lib/auction-data";
 import { toast } from "sonner";
 
-interface AuctionCardProps {
-  item: AuctionItem;
-  index?: number;
-}
-
-const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
+const AuctionCard = ({ item, index = 0 }) => {
   const [currentBid, setCurrentBid] = useState(item.currentBid);
   const [bidCount, setBidCount] = useState(item.bidCount);
   const [isBidding, setIsBidding] = useState(false);
 
-  const handleBid = (e: React.MouseEvent) => {
+  const handleBid = (e) => {
     e.preventDefault();
     e.stopPropagation();
     setIsBidding(true);
@@ -26,11 +20,9 @@ const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
     const prevBid = currentBid;
     const prevCount = bidCount;
 
-    // Optimistic update
     setCurrentBid(newBid);
     setBidCount((c) => c + 1);
 
-    // Simulate server response
     setTimeout(() => {
       if (Math.random() > 0.15) {
         toast.success(`Bid of $${newBid.toLocaleString()} placed!`, { description: item.title });
@@ -54,14 +46,7 @@ const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
       >
         {/* Image */}
         <div className="relative aspect-square overflow-hidden">
-          <img
-            src={item.image}
-            alt={item.title}
-            loading="lazy"
-            width={640}
-            height={640}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
+          <img src={item.image} alt={item.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent" />
 
           {item.isLive && (
@@ -106,20 +91,11 @@ const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
           </div>
 
           <div className="flex gap-2">
-            <Button
-              onClick={handleBid}
-              disabled={isBidding}
-              className="flex-1 group/btn"
-            >
+            <Button onClick={handleBid} disabled={isBidding} className="flex-1 group/btn">
               <Gavel className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-[-15deg]" />
               {isBidding ? "Placing..." : "Place Bid"}
             </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              className="border-border/50 hover:border-primary/50"
-              onClick={(e) => e.preventDefault()}
-            >
+            <Button variant="outline" size="icon" className="border-border/50 hover:border-primary/50" onClick={(e) => e.preventDefault()}>
               <TrendingUp className="h-4 w-4" />
             </Button>
           </div>
