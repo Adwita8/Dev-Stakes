@@ -6,6 +6,8 @@ A modern, real-time auction bidding platform built with React, TypeScript, and c
 
 https://luminous-parfait-0db9c9.netlify.app/
 
+<img width="1902" height="902" alt="image" src="https://github.com/user-attachments/assets/98a4cd29-34ea-4a57-bd1b-de867afcaee7" />
+
 
 ## 🚀 Features
 
