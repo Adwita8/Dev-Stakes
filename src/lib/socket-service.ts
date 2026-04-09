@@ -6,9 +6,9 @@ const botNames = [
   "DigitalDragon", "AuctionAce", "MidnightBid", "EliteSniper",
 ];
 
-const listeners = new Map();
-const globalListeners = new Set();
-const simulations = new Map();
+const listeners: Map<string, Set<(bid: any) => void>> = new Map();
+const globalListeners: Set<(bid: any) => void> = new Set();
+const simulations: Map<string, ReturnType<typeof setInterval>> = new Map();
 
 function notify(auctionId, bid) {
   const set = listeners.get(auctionId);
