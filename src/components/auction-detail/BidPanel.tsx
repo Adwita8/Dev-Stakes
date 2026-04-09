@@ -5,13 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 
-interface BidPanelProps {
-  currentBid: number;
-  isBidding: boolean;
-  onBid: (amount: number) => void;
-}
-
-const BidPanel = ({ currentBid, isBidding, onBid }: BidPanelProps) => {
+const BidPanel = ({ currentBid, isBidding, onBid }) => {
   const [customAmount, setCustomAmount] = useState("");
   const [isWatching, setIsWatching] = useState(false);
 
@@ -25,7 +19,6 @@ const BidPanel = ({ currentBid, isBidding, onBid }: BidPanelProps) => {
 
   return (
     <div className="glass rounded-2xl p-6 neon-border-card">
-      {/* Current bid display */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm text-muted-foreground">Current Bid</span>
         <div className="flex items-center gap-1 text-sm text-accent">
@@ -43,57 +36,29 @@ const BidPanel = ({ currentBid, isBidding, onBid }: BidPanelProps) => {
         ${currentBid.toLocaleString()}
       </motion.div>
 
-      <p className="text-xs text-muted-foreground">
-        Minimum next bid: ${minBid.toLocaleString()}
-      </p>
+      <p className="text-xs text-muted-foreground">Minimum next bid: ${minBid.toLocaleString()}</p>
 
-      {/* Quick bid buttons */}
       <div className="grid grid-cols-3 gap-2 mt-6">
         {quickBids.map((qb) => (
-          <Button
-            key={qb.label}
-            variant="outline"
-            size="sm"
-            disabled={isBidding}
-            onClick={() => onBid(qb.amount)}
-            className="border-primary/30 hover:border-primary hover:bg-primary/10 font-mono"
-          >
+          <Button key={qb.label} variant="outline" size="sm" disabled={isBidding} onClick={() => onBid(qb.amount)} className="border-primary/30 hover:border-primary hover:bg-primary/10 font-mono">
             <ChevronUp className="h-3 w-3 mr-1" />
             ${qb.amount.toLocaleString()}
           </Button>
         ))}
       </div>
 
-      {/* Custom bid input */}
       <div className="flex gap-2 mt-4">
-        <Input
-          type="number"
-          placeholder={`Min $${minBid.toLocaleString()}`}
-          value={customAmount}
-          onChange={(e) => setCustomAmount(e.target.value)}
-          className="bg-secondary/50 border-border/50 font-mono"
-        />
-        <Button
-          disabled={isBidding || !customAmount}
-          onClick={() => {
-            onBid(Number(customAmount));
-            setCustomAmount("");
-          }}
-          className="glow-primary shrink-0"
-        >
+        <Input type="number" placeholder={`Min $${minBid.toLocaleString()}`} value={customAmount} onChange={(e) => setCustomAmount(e.target.value)} className="bg-secondary/50 border-border/50 font-mono" />
+        <Button disabled={isBidding || !customAmount} onClick={() => { onBid(Number(customAmount)); setCustomAmount(""); }} className="glow-primary shrink-0">
           <Gavel className="mr-2 h-4 w-4" />
           {isBidding ? "..." : "Bid"}
         </Button>
       </div>
 
-      {/* Watch button */}
       <Button
         variant="outline"
         className={`w-full mt-4 ${isWatching ? "border-accent text-accent" : "border-border/50"}`}
-        onClick={() => {
-          setIsWatching(!isWatching);
-          toast(isWatching ? "Removed from watchlist" : "Added to watchlist!");
-        }}
+        onClick={() => { setIsWatching(!isWatching); toast(isWatching ? "Removed from watchlist" : "Added to watchlist!"); }}
       >
         <Heart className={`mr-2 h-4 w-4 ${isWatching ? "fill-accent" : ""}`} />
         {isWatching ? "Watching" : "Add to Watchlist"}

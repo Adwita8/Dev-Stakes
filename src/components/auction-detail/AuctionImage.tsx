@@ -1,19 +1,9 @@
 import { Eye } from "lucide-react";
 import CountdownTimer from "@/components/CountdownTimer";
-import type { AuctionItem } from "@/lib/auction-data";
 
-interface AuctionImageProps {
-  item: AuctionItem;
-  viewerCount: number;
-}
-
-const AuctionImage = ({ item, viewerCount }: AuctionImageProps) => (
+const AuctionImage = ({ item, viewerCount }) => (
   <div className="relative rounded-3xl overflow-hidden neon-border-card group">
-    <img
-      src={item.image}
-      alt={item.title}
-      className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105"
-    />
+    <img src={item.image} alt={item.title} className="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-105" />
     <div className="absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-transparent" />
 
     {item.isLive && (
@@ -30,12 +20,8 @@ const AuctionImage = ({ item, viewerCount }: AuctionImageProps) => (
 
     <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between">
       <div>
-        <div className="glass rounded-full px-3 py-1 text-xs text-accent mb-2 inline-block">
-          {item.category}
-        </div>
-        <h1 className="font-display text-3xl md:text-4xl font-bold drop-shadow-lg">
-          {item.title}
-        </h1>
+        <div className="glass rounded-full px-3 py-1 text-xs text-accent mb-2 inline-block">{item.category}</div>
+        <h1 className="font-display text-3xl md:text-4xl font-bold drop-shadow-lg">{item.title}</h1>
         <p className="text-muted-foreground text-sm mt-1">by {item.seller}</p>
       </div>
       <CountdownTimer endsAt={item.endsAt} />

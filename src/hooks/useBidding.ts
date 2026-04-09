@@ -2,14 +2,11 @@ import { useState } from "react";
 import { socketService } from "@/lib/socket-service";
 import { toast } from "sonner";
 
-/**
- * Hook that handles placing bids on an auction item.
- * Returns the bidding state and a function to place a bid.
- */
-export function useBidding(auctionId: string, itemTitle: string) {
+// Handles placing bids on an auction item
+export function useBidding(auctionId, itemTitle) {
   const [isBidding, setIsBidding] = useState(false);
 
-  const placeBid = async (amount: number, currentBid: number) => {
+  const placeBid = async (amount, currentBid) => {
     if (amount <= currentBid) {
       toast.error("Bid must be higher than current bid!");
       return;

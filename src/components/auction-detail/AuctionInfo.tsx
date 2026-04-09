@@ -1,10 +1,4 @@
 import { Shield, Zap, Clock, Activity } from "lucide-react";
-import type { AuctionItem } from "@/lib/auction-data";
-
-interface AuctionInfoProps {
-  item: AuctionItem;
-  totalBids: number;
-}
 
 const features = [
   { icon: Shield, title: "Verified Authentic", desc: "Seller & item verified" },
@@ -12,9 +6,8 @@ const features = [
   { icon: Activity, title: "Live Updates", desc: "Real-time bid feed" },
 ];
 
-const AuctionInfo = ({ item, totalBids }: AuctionInfoProps) => (
+const AuctionInfo = ({ item, totalBids }) => (
   <div className="space-y-6">
-    {/* Description */}
     <div className="glass rounded-2xl p-6 space-y-4">
       <h2 className="font-display text-xl font-semibold flex items-center gap-2">
         <Shield className="h-5 w-5 text-primary" />
@@ -37,7 +30,6 @@ const AuctionInfo = ({ item, totalBids }: AuctionInfoProps) => (
       </div>
     </div>
 
-    {/* Features */}
     <div className="glass rounded-2xl p-6">
       <h2 className="font-display text-xl font-semibold mb-4 flex items-center gap-2">
         <Zap className="h-5 w-5 text-accent" />

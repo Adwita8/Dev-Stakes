@@ -1,94 +1,78 @@
-// Socket.io client service
-// In production, connect to your Node.js server: io("https://your-server.com")
-// For now, this simulates real-time bid updates locally
+// Simulates real-time bid updates (replace with real socket.io in production)
 
-export interface LiveBid {
-  id: string;
-  auctionId: string;
-  userId: string;
-  userName: string;
-  amount: number;
-  timestamp: Date;
+const botNames = [
+  "CryptoWhale", "ArtHunter", "BidKing99", "LuxuryLion",
+  "ShadowBidder", "NeonTrader", "PhantomBid", "VaultKeeper",
+  "DigitalDragon", "AuctionAce", "MidnightBid", "EliteSniper",
+];
+
+const listeners = new Map();
+const globalListeners = new Set();
+const simulations = new Map();
+
+function notify(auctionId, bid) {
+  listeners.get(auctionId)?.forEach((cb) => cb(bid));
+  globalListeners.forEach((cb) => cb(bid));
 }
 
-type BidCallback = (bid: LiveBid) => void;
+export const socketService = {
+  // Listen for bids on a specific auction
+  subscribe(auctionId, callback) {
+    if (!listeners.has(auctionId)) listeners.set(auctionId, new Set());
+    listeners.get(auctionId).add(callback);
+    return () => listeners.get(auctionId)?.delete(callback);
+  },
 
-class SocketService {
-  private listeners: Map<string, Set<BidCallback>> = new Map();
-  private globalListeners: Set<BidCallback> = new Set();
-  private simulationIntervals: Map<string, ReturnType<typeof setInterval>> = new Map();
+  // Listen for bids on all auctions
+  subscribeAll(callback) {
+    globalListeners.add(callback);
+    return () => globalListeners.delete(callback);
+  },
 
-  // Simulated bot names for realistic feel
-  private botNames = [
-    "CryptoWhale", "ArtHunter", "BidKing99", "LuxuryLion",
-    "ShadowBidder", "NeonTrader", "PhantomBid", "VaultKeeper",
-    "DigitalDragon", "AuctionAce", "MidnightBid", "EliteSniper"
-  ];
+  // Start fake bids from bots
+  startSimulation(auctionId, basePrice) {
+    if (simulations.has(auctionId)) return;
 
-  subscribe(auctionId: string, callback: BidCallback) {
-    if (!this.listeners.has(auctionId)) {
-      this.listeners.set(auctionId, new Set());
-    }
-    this.listeners.get(auctionId)!.add(callback);
-    return () => {
-      this.listeners.get(auctionId)?.delete(callback);
-    };
-  }
-
-  subscribeAll(callback: BidCallback) {
-    this.globalListeners.add(callback);
-    return () => {
-      this.globalListeners.delete(callback);
-    };
-  }
-
-  // Simulate incoming bids from other users
-  startSimulation(auctionId: string, basePrice: number) {
-    if (this.simulationIntervals.has(auctionId)) return;
-
-    let currentPrice = basePrice;
+    let price = basePrice;
     const interval = setInterval(() => {
-      if (Math.random() > 0.4) return; // 40% chance per tick
+      if (Math.random() > 0.4) return;
 
-      const increment = Math.ceil(currentPrice * (0.02 + Math.random() * 0.05));
-      currentPrice += increment;
+      price += Math.ceil(price * (0.02 + Math.random() * 0.05));
 
-      const bid: LiveBid = {
+      const bid = {
         id: `sim-${Date.now()}-${Math.random().toString(36).slice(2)}`,
         auctionId,
         userId: `bot-${Math.floor(Math.random() * 100)}`,
-        userName: this.botNames[Math.floor(Math.random() * this.botNames.length)],
-        amount: currentPrice,
+        userName: botNames[Math.floor(Math.random() * botNames.length)],
+        amount: price,
         timestamp: new Date(),
       };
 
-      this.listeners.get(auctionId)?.forEach((cb) => cb(bid));
-      this.globalListeners.forEach((cb) => cb(bid));
+      notify(auctionId, bid);
     }, 3000 + Math.random() * 5000);
 
-    this.simulationIntervals.set(auctionId, interval);
-  }
+    simulations.set(auctionId, interval);
+  },
 
-  stopSimulation(auctionId: string) {
-    const interval = this.simulationIntervals.get(auctionId);
+  stopSimulation(auctionId) {
+    const interval = simulations.get(auctionId);
     if (interval) {
       clearInterval(interval);
-      this.simulationIntervals.delete(auctionId);
+      simulations.delete(auctionId);
     }
-  }
+  },
 
   stopAll() {
-    this.simulationIntervals.forEach((interval) => clearInterval(interval));
-    this.simulationIntervals.clear();
-  }
+    simulations.forEach((interval) => clearInterval(interval));
+    simulations.clear();
+  },
 
-  // Simulate placing a bid (would go through server in production)
-  placeBid(auctionId: string, amount: number, userName: string): Promise<LiveBid> {
+  // Place a bid (simulated server call)
+  placeBid(auctionId, amount, userName) {
     return new Promise((resolve, reject) => {
       setTimeout(() => {
-        const success = Math.random() > 0.1; // 90% success
-        if (success) {
-          const bid: LiveBid = {
+        if (Math.random() > 0.1) {
+          const bid = {
             id: `bid-${Date.now()}`,
             auctionId,
             userId: "u1",
@@ -96,15 +80,12 @@ class SocketService {
             amount,
             timestamp: new Date(),
           };
-          this.listeners.get(auctionId)?.forEach((cb) => cb(bid));
-          this.globalListeners.forEach((cb) => cb(bid));
+          notify(auctionId, bid);
           resolve(bid);
         } else {
           reject(new Error("Bid rejected — someone was faster!"));
         }
       }, 400 + Math.random() * 600);
     });
-  }
-}
-
-export const socketService = new SocketService();
+  },
+};

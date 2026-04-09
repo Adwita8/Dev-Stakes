@@ -4,32 +4,9 @@ import auctionItem3 from "@/assets/auction-item-3.jpg";
 import auctionItem4 from "@/assets/auction-item-4.jpg";
 import auctionItem5 from "@/assets/auction-item-5.jpg";
 
-export interface Bid {
-  id: string;
-  userId: string;
-  userName: string;
-  amount: number;
-  timestamp: Date;
-}
-
-export interface AuctionItem {
-  id: string;
-  title: string;
-  description: string;
-  image: string;
-  currentBid: number;
-  startingBid: number;
-  bidCount: number;
-  endsAt: Date;
-  seller: string;
-  category: string;
-  bids: Bid[];
-  isLive: boolean;
-}
-
 const now = Date.now();
 
-export const auctionItems: AuctionItem[] = [
+export const auctionItems = [
   {
     id: "1",
     title: "Vintage Chrono Master",
