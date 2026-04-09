@@ -2,6 +2,11 @@
 
 A modern, real-time auction bidding platform built with React, TypeScript, and cutting-edge web technologies. Experience live auctions with instant bid updates, animated countdown timers, and a sleek glassmorphism UI.
 
+## 🚀 Deployment
+
+https://luminous-parfait-0db9c9.netlify.app/
+
+
 ## 🚀 Features
 
 - **Live Auction Listings** - Browse active and upcoming auctions with real-time data
@@ -72,54 +77,7 @@ src/
 - Node.js 16+ or Bun
 - npm, yarn, or bun package manager
 
-### Installation
 
-1. Clone the repository:
-```bash
-git clone https://github.com/Adwita8/Dev-Stakes.git
-cd Dev-Stakes/bid-verse-nova
-```
-
-2. Install dependencies:
-```bash
-bun install
-# or
-npm install
-```
-
-3. Start the development server:
-```bash
-bun run dev
-# or
-npm run dev
-```
-
-The app will be available at `http://localhost:8080`
-
-## 📝 Available Scripts
-
-```bash
-# Development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Build for development
-npm run build:dev
-
-# Preview production build
-npm run preview
-
-# Run tests
-npm run test
-
-# Watch mode for tests
-npm run test:watch
-
-# Lint code
-npm run lint
-```
 
 ## 🎨 Component Highlights
 
@@ -181,19 +139,8 @@ Bot names include: CryptoWhale, ArtHunter, BidKing99, LuxuryLion, and more for r
 - **Auctions (/auctions)** - Browse all available auctions with filtering
 - **Auction Detail (/auction/:id)** - View detailed auction info, live bids, and place bids
 - **Profile (/profile)** - User bidding history and statistics
-- **404 (**)** - Not found page
 
-## 🧪 Testing
 
-The project includes:
-- **Unit Tests**: Vitest for component and utility testing
-- **E2E Tests**: Playwright fixtures configured for end-to-end testing
-
-Run tests with:
-```bash
-npm run test          # Single run
-npm run test:watch    # Watch mode
-```
 
 ## 🎨 UI/UX Features
 
@@ -221,15 +168,6 @@ Tailored breakpoints for:
 - `vitest.config.ts` - Unit test configuration
 - `postcss.config.js` - CSS processing
 
-## 🚀 Deployment
-
-Build for production:
-```bash
-npm run build
-npm run preview  # Test production build locally
-```
-
-The dist folder contains optimized assets ready for deployment.
 
 ## 🔮 Future Enhancements
 
@@ -242,14 +180,4 @@ The dist folder contains optimized assets ready for deployment.
 - Email notifications for auction status
 - Mobile app (React Native)
 
-## 📄 License
 
-This project is part of the Dev-Stakes platform.
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to submit issues and pull requests.
-
----
-
-Built with ❤️ for real-time auction enthusiasts
