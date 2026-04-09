@@ -16,30 +16,30 @@ const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
   const [currentBid, setCurrentBid] = useState(item.currentBid);
   const [bidCount, setBidCount] = useState(item.bidCount);
   const [isBidding, setIsBidding] = useState(false);
-  const [showBidSuccess, setShowBidSuccess] = useState(false);
 
   const handleBid = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     setIsBidding(true);
-    const increment = Math.ceil(currentBid * 0.05);
-    const newBid = currentBid + increment;
 
+    const newBid = currentBid + Math.ceil(currentBid * 0.05);
+    const prevBid = currentBid;
+    const prevCount = bidCount;
+
+    // Optimistic update
     setCurrentBid(newBid);
     setBidCount((c) => c + 1);
-    setShowBidSuccess(true);
 
+    // Simulate server response
     setTimeout(() => {
-      const accepted = Math.random() > 0.15;
-      if (accepted) {
+      if (Math.random() > 0.15) {
         toast.success(`Bid of $${newBid.toLocaleString()} placed!`, { description: item.title });
       } else {
-        setCurrentBid(currentBid);
-        setBidCount(bidCount);
-        toast.error("Bid rejected — someone was faster!", { description: "Try again with a higher amount." });
+        setCurrentBid(prevBid);
+        setBidCount(prevCount);
+        toast.error("Bid rejected — someone was faster!");
       }
       setIsBidding(false);
-      setTimeout(() => setShowBidSuccess(false), 500);
     }, 800 + Math.random() * 400);
   };
 
@@ -109,12 +109,17 @@ const AuctionCard = ({ item, index = 0 }: AuctionCardProps) => {
             <Button
               onClick={handleBid}
               disabled={isBidding}
-              className={`flex-1 group/btn ${showBidSuccess ? "glow-primary" : ""}`}
+              className="flex-1 group/btn"
             >
               <Gavel className="mr-2 h-4 w-4 transition-transform group-hover/btn:rotate-[-15deg]" />
               {isBidding ? "Placing..." : "Place Bid"}
             </Button>
-            <Button variant="outline" size="icon" className="border-border/50 hover:border-primary/50" onClick={(e) => e.preventDefault()}>
+            <Button
+              variant="outline"
+              size="icon"
+              className="border-border/50 hover:border-primary/50"
+              onClick={(e) => e.preventDefault()}
+            >
               <TrendingUp className="h-4 w-4" />
             </Button>
           </div>
