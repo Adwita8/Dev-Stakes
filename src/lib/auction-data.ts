@@ -44,7 +44,7 @@ export const auctionItems = [
   },
   {
     id: "3",
-    title: "Neon Crystal Skull",
+    title: "Chritopher Salvatore painting",
     description: "Hand-crafted crystal skull with UV-reactive properties. A stunning piece of modern dark art.",
     image: auctionItem3,
     currentBid: 6700,
@@ -60,7 +60,7 @@ export const auctionItems = [
   },
   {
     id: "4",
-    title: "Phantom GT Concept",
+    title: "Antique Jewellry Box",
     description: "1:18 scale diecast model of the unreleased Phantom GT with working LED lights and custom neon underglow.",
     image: auctionItem4,
     currentBid: 980,
@@ -76,7 +76,7 @@ export const auctionItems = [
   },
   {
     id: "5",
-    title: "Cosmic Fractal #042",
+    title: "Prada Galleria Bag",
     description: "Generative digital art piece. One-of-a-kind algorithm-generated cosmic fractal with certificate of authenticity.",
     image: auctionItem5,
     currentBid: 3400,
@@ -94,8 +94,8 @@ export const auctionItems = [
 
 export const userProfile = {
   id: "u1",
-  name: "CryptoKing",
-  email: "cryptoking@auction.io",
+  name: "Nova",
+  email: "Nova@auction.io",
   balance: 25000,
   totalBids: 142,
   totalWins: 23,
