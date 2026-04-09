@@ -11,7 +11,8 @@ const globalListeners = new Set();
 const simulations = new Map();
 
 function notify(auctionId, bid) {
-  listeners.get(auctionId)?.forEach((cb) => cb(bid));
+  const set = listeners.get(auctionId);
+  if (set) set.forEach((cb) => cb(bid));
   globalListeners.forEach((cb) => cb(bid));
 }
 
